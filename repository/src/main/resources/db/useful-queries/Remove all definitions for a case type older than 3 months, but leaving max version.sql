@@ -140,15 +140,15 @@ BEGIN
   DELETE FROM noc_config WHERE case_type_id IN
         (SELECT id FROM tmp_case_type_ids);
 
-  --Takes very long to complete
-  --fk_case_field_case_type_id is not indexed by default
-  DELETE FROM case_type WHERE id IN
-    (SELECT id FROM tmp_case_type_ids);
-
-  DELETE FROM search_criteria WHERE case_type_id IN
+ DELETE FROM search_criteria WHERE case_type_id IN
     (SELECT id FROM tmp_case_type_ids);
 
   DELETE FROM search_party WHERE case_type_id IN
+    (SELECT id FROM tmp_case_type_ids);
+    
+  --Takes very long to complete
+  --fk_case_field_case_type_id is not indexed by default
+  DELETE FROM case_type WHERE id IN
     (SELECT id FROM tmp_case_type_ids);
 
   DROP VIEW IF EXISTS view__case_type_to_remove;
